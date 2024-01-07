@@ -1,4 +1,4 @@
-from webbrowser import webbrowser
+import webbrowser
 import streamlit as st
 
 st.set_page_config(page_title="Cetch-up", page_icon="Logo-e.png", layout='wide')
