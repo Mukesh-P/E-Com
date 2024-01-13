@@ -1,4 +1,6 @@
 import streamlit as st
+from PIL import Image
+import csv
 
 st.set_page_config(page_title="Cetch-up", page_icon="Logo-e.png", layout='wide')
 
@@ -11,6 +13,21 @@ def local_css(file_name):
 local_css("style.css")
 with st.container():
     st.title("Welcome to Cetch-up :wave:")
+    Product = st.text_input('Enter Product Name')
+    st.write('The Results for the Product', Product)
+    if Product:
+        with open('All_Products-db.csv', 'r', newline='') as s:
+            a = csv.reader(s)
+            r = list(a)
+            for i in r:
+                if Product in i[0]:
+                    with st.container():
+                        img = Image.open(str(i[1]))
+                        img_cl, txt_cl = st.columns((1, 2))
+                        with txt_cl:
+                            st.subheader(i[0])
+                        with img_cl:
+                            st.image(img)
 
 with st.sidebar:
     st.write("Categories")
