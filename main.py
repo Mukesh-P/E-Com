@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import csv
+from autocorrect import Speller
 
 st.set_page_config(page_title="Cetch-up", page_icon="Logo-e.png", layout='wide')
 
@@ -14,17 +15,33 @@ def strike(text):
     return ''.join([u'\u0336{}'.format(c) for c in text])
 
 
+def insert_(word):
+    split_l = []
+    insert_list = []
+
+    # Making pairs of the split words
+    for i in range(len(word) + 1):
+        split_l.append((word[0:i], word[i:]))
+
+    # Storing new words in a list
+    # But one new character at each location
+    alphs = 'abcdefghijklmnopqrstuvwxyz'
+    insert_list = [a + l + b for a, b in split_l for l in alphs]
+    return insert_list
+
+
 local_css("style.css")
 with st.container():
     st.title("Welcome to Cetch-up :wave:")
-    Product = st.text_input('Enter Product Name')
+    spell = Speller()
+    Product = spell(st.text_input('Enter Product Name'))
     if Product:
         st.write('The Results for the Product', Product)
         with open('All_Products-db.csv', 'r', newline='') as s:
             a = csv.reader(s)
             r = list(a)
             for i in r:
-                if Product in i[0]:
+                if i[0] in Product:
                     with st.container():
                         img = Image.open(str(i[1]))
                         img_cl, txt_cl = st.columns((1, 2))
