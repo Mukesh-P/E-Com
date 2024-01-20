@@ -35,6 +35,7 @@ with st.container():
     st.title("Welcome to Cetch-up :wave:")
     spell = Speller()
     Product = spell(st.text_input('Enter Product Name'))
+    flag = 1
     if Product:
         st.write('The Results for the Product', Product)
         with open('All_Products-db.csv', 'r', newline='') as s:
@@ -42,6 +43,25 @@ with st.container():
             r = list(a)
             for i in r:
                 if i[0].lower() in Product.lower():
+                    flag = 0
+                    with st.container():
+                        img = Image.open(str(i[1]))
+                        img_cl, txt_cl = st.columns((1, 2))
+                        with txt_cl:
+                            st.header(i[0])
+                            st.subheader(i[2])
+                            st.write(strike(i[3]), i[4])
+
+                        with img_cl:
+                            st.image(img)
+    if flag:
+        with open('All_Products-db.csv', 'r', newline='') as s:
+            Product = spell(Product)
+            a = csv.reader(s)
+            r = list(a)
+            for i in r:
+                if i[0].lower() in Product.lower():
+                    flag = 0
                     with st.container():
                         img = Image.open(str(i[1]))
                         img_cl, txt_cl = st.columns((1, 2))
