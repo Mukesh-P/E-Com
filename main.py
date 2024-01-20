@@ -41,7 +41,7 @@ with st.container():
             a = csv.reader(s)
             r = list(a)
             for i in r:
-                if i[0] in Product:
+                if i[0].lower() in Product.lower():
                     with st.container():
                         img = Image.open(str(i[1]))
                         img_cl, txt_cl = st.columns((1, 2))
