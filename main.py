@@ -10,12 +10,16 @@ def local_css(file_name):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
+def strike(text):
+    return ''.join([u'\u0336{}'.format(c) for c in text])
+
+
 local_css("style.css")
 with st.container():
     st.title("Welcome to Cetch-up :wave:")
     Product = st.text_input('Enter Product Name')
-    st.write('The Results for the Product', Product)
     if Product:
+        st.write('The Results for the Product', Product)
         with open('All_Products-db.csv', 'r', newline='') as s:
             a = csv.reader(s)
             r = list(a)
@@ -25,7 +29,10 @@ with st.container():
                         img = Image.open(str(i[1]))
                         img_cl, txt_cl = st.columns((1, 2))
                         with txt_cl:
-                            st.subheader(i[0])
+                            st.header(i[0])
+                            st.subheader(i[2])
+                            st.write(strike(i[3]), i[4])
+
                         with img_cl:
                             st.image(img)
 
