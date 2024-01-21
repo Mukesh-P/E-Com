@@ -51,7 +51,7 @@ with st.container():
                     if det != '' and rate != '' and off_rate != '' and off_per != '':
                         with open('All_Products-db.csv', 'a', newline='') as o:
                             wr = csv.writer(o)
-                            wr.writerow([det, fileName, rate, off_rate, off_per])
+                            wr.writerow([det, fileName, off_rate, rate, off_per])
 
                     if submitted and (det != '' and rate != '' and off_rate != '' and off_per != ''):
                         st.success("The Form Has Been Added to the Data Base")
